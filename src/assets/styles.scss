@@ -8,6 +8,7 @@
   --tooltip-padding: 4px 8px;
   --snackbar-width: 360px;
   --snackbar-font-size: 13px;
+  --opacity-focus: 0;
 }
 
 body {
@@ -41,7 +42,7 @@ body {
 // #region:    --- 路由过度动画
 .fade-enter-active,
 .fade-leave-active {
-  transition: opacity 0.08s linear;
+  transition: opacity 0.16s linear;
 }
 
 .fade-enter-from,

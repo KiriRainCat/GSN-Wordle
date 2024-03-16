@@ -15,12 +15,12 @@ export const routes: Array<RouteRecordRaw> = [
   {
     path: '/game',
     name: 'game',
-    component: () => import('../../views/GameView.vue'),
+    component: () => import('../../views/game/GameView.vue'),
   },
   {
     path: '/word-bank',
     name: 'word-bank',
-    component: () => import('../../views/WordBankView.vue'),
+    component: () => import('../../views/word/WordBankView.vue'),
   },
   {
     path: '/admin',
