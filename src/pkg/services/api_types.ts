@@ -11,4 +11,16 @@ interface Word {
   updated_at: string
 }
 
-export type { Word }
+/** 单词数据模型 */
+interface Commit {
+  id: number
+  wid: number
+
+  subject: string
+  word: string
+  definition: string
+
+  created_at: string
+}
+
+export type { Word, Commit }

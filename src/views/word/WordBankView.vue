@@ -1,19 +1,20 @@
 <script setup lang="ts">
 import { getWordList } from '@/pkg/services/api'
-import type { Word } from '@/pkg/services/api_types'
 import { onBeforeMount, ref } from 'vue'
 
 import { Icon } from '@iconify/vue'
 import WordCard from './components/WordCard.vue'
 import WordForm from './components/WordForm.vue'
+import { useStore } from '@/pkg/stores/app'
+
+const store = useStore()
 
 const isLoading = ref(true)
-const wordList = ref(Array<Word>())
 onBeforeMount(fetchWordList)
 
 async function fetchWordList() {
   isLoading.value = true
-  wordList.value = await getWordList()
+  store.words = await getWordList()
   isLoading.value = false
 }
 
@@ -52,11 +53,10 @@ const showAddWordDialog = ref(false)
     <!-- 单词卡片列表 -->
     <var-loading type="wave" :loading="isLoading" class="w-full">
       <div class="grid max-h-[83vh] grid-cols-[repeat(auto-fit,minmax(16rem,1fr))] gap-x-3 gap-y-5 !overflow-auto py-1">
-        <WordCard v-for="word in wordList" :key="word.id" :word="word" />
+        <WordCard v-for="word in store.words.filter((w) => w.active)" :key="word.id" :word="word" />
       </div>
     </var-loading>
   </div>
 </template>
 
 <style scoped lang="scss"></style>
-./components/WordForm.vue

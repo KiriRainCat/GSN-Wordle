@@ -25,6 +25,6 @@ export const routes: Array<RouteRecordRaw> = [
   {
     path: '/admin',
     name: 'admin',
-    component: () => import('../../views/AdminVue.vue'),
+    component: () => import('../../views/word/AdminVue.vue'),
   },
 ]

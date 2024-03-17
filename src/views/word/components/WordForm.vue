@@ -4,6 +4,12 @@ import { onBeforeMount, reactive, ref } from 'vue'
 
 import { Icon } from '@iconify/vue'
 import { Form, Snackbar } from '@varlet/ui'
+import { useRoute } from 'vue-router'
+import { useStore } from '@/pkg/stores/app'
+import type { Word } from '@/pkg/services/api_types'
+
+const store = useStore()
+const route = useRoute()
 
 const loading = ref(false)
 const props = defineProps({
@@ -15,12 +21,15 @@ onBeforeMount(async () => {
   if (props.id) {
     loading.value = true
     const result = await getWordById(props.id)
+    word.value = result
     form.word = result.word
     form.subject = result.subject
     form.definition = result.definition
     loading.value = false
   }
 })
+
+const word = ref<Word | undefined>()
 
 const formRef = ref<Form>()
 const form = reactive({
@@ -40,6 +49,16 @@ async function submitForm() {
   if (props.id) {
     updateWordInfo(props.id, form.subject, form.word, form.definition).then(() => {
       Snackbar({ type: 'success', content: 'Word update request committed successfully!' })
+      if (route.name === 'admin') {
+        const idx = store.words.findIndex((w) => w.id == word.value?.id)
+        word.value!.subject = form.subject
+        word.value!.definition = form.definition
+        word.value!.word = form.word
+        store.words[idx] = word.value!
+        props.closeFunc()
+        loading.value = false
+        return
+      }
       location.reload()
     })
     return
