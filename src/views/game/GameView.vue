@@ -24,7 +24,7 @@ onBeforeMount(async () => {
 })
 
 async function guessWord() {
-  if (guessInput.value.length != store.word!.word.length) return
+  if (guessInput.value.length < store.word!.word.length - 3) return
 
   try {
     await axios.get(`https://api.dictionaryapi.dev/api/v2/entries/en/${guessInput.value}`)
@@ -82,7 +82,7 @@ function getLetterColorClass(letter: string, idx: number): string {
 
       <!-- 单词字母个数 -->
       <div class="mt-8">
-        {{ store.word?.word.length }} letters
+        {{ store.word?.word.length }} characters in total
         {{ store.word?.word.includes(' ') ? `(${store.word?.word.split(' ').length - 1} spaces included)` : '(no spaces included)' }}
       </div>
 
@@ -102,7 +102,9 @@ function getLetterColorClass(letter: string, idx: number): string {
           v-model="guessInput"
           :disabled="store.isFinished"
           :maxlength="store.word?.word.length"
-          :rules="[(val) => val.length == store.word?.word.length || `Length must be ${store.word?.word.length}`]"
+          :rules="[
+            (val) => val.length > (store.word?.word.length ?? 3) - 3 || `Length must be greater than ${(store.word?.word.length ?? 3) - 3}`,
+          ]"
           placeholder="Take a guess"
         >
           <template #append-icon>
@@ -113,14 +115,15 @@ function getLetterColorClass(letter: string, idx: number): string {
       </div>
 
       <!-- 单词释义 -->
-      <div class="mt-6 max-w-64">
+      <div class="mt-6 max-w-96">
         <var-paper elevation v-if="!((store.tries.length ?? 0) > MAXIMUM_TRIES / 2 - 1)" class="p-3 text-xs">
           Definition will be revealed in {{ MAXIMUM_TRIES / 2 - 1 - (store.tries.length ?? 0) }} tries
         </var-paper>
-        <var-paper elevation v-else class="p-3 text-base">
+        <var-paper elevation v-else class="p-3 text-lg tracking-widest">
           <span v-for="(letter, idx) in store.word?.definition" :key="idx">
             {{
-              !'abcdefghijklmnopqrstuvwxyz'.includes(letter.toLowerCase()) || store.tries.join().includes(letter.toLowerCase())
+              !'abcdefghijklmnopqrstuvwxyz'.includes(letter.toLowerCase()) ||
+              (store.tries.join().includes(letter.toLowerCase()) && getLetterColorClass(letter, 0) !== 'text-red-400')
                 ? letter
                 : '_'
             }}
