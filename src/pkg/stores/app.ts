@@ -6,8 +6,15 @@ export const useStore = defineStore('app', () => {
   const words = ref(Array<Word>())
   const commits = ref(Array<Commit>())
 
+  const word = ref<Word | undefined>()
+  const tries = ref<string[]>([])
+  const isFinished = ref(false)
+
   return {
     words,
     commits,
+    word,
+    tries,
+    isFinished,
   }
 })
