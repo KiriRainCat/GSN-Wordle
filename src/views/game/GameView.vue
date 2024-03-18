@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { getWordOfTheDay } from '@/pkg/services/api'
+import { getWordList, getWordOfTheDay } from '@/pkg/services/api'
 import { GameLogic, MAXIMUM_TRIES } from '@/pkg/services/game_logic'
 import { Snackbar } from '@varlet/ui'
 import { onBeforeMount, ref } from 'vue'
@@ -7,6 +7,7 @@ import { onBeforeMount, ref } from 'vue'
 import { Icon } from '@iconify/vue'
 import WordCard from '../word/components/WordCard.vue'
 import { useStore } from '@/pkg/stores/app'
+import axios from 'axios'
 
 const store = useStore()
 
@@ -17,15 +18,25 @@ const guessInput = ref('')
 
 onBeforeMount(async () => {
   store.word = await getWordOfTheDay()
+  store.words = await getWordList()
   logic = new GameLogic(store.word)
   initializing.value = false
 })
 
-function guessWord() {
+async function guessWord() {
   if (guessInput.value.length != store.word!.word.length) return
 
+  try {
+    await axios.get(`https://api.dictionaryapi.dev/api/v2/entries/en/${guessInput.value}`)
+  } catch (_) {
+    if (!store.words.map((w) => w.word.toLowerCase()).includes(guessInput.value.toLowerCase())) {
+      Snackbar({ type: 'error', content: 'No such word! Please try again' })
+      return
+    }
+  }
+
   if (logic.guess(guessInput.value)) {
-    Snackbar('Hooray! You got it!')
+    Snackbar({ type: 'success', content: 'Hooray! You got it!' })
   }
 
   guessInput.value = ''
@@ -51,7 +62,9 @@ function getLetterColorClass(letter: string, idx: number): string {
         </var-tooltip>
 
         <!-- 页面标题 -->
-        <div class="mx-2 mb-2 mt-0.5 text-2xl font-bold">Demo Game Page (WIP, UI need to be designed)</div>
+        <div class="mx-2 mb-2 mt-0.5 text-2xl font-bold">
+          Demo Game Page (WIP, UI need to be designed, game features and logics need to be improved)
+        </div>
 
         <!-- 排行榜按钮 -->
         <var-tooltip trigger="hover" content="Leaderboard">
@@ -67,8 +80,14 @@ function getLetterColorClass(letter: string, idx: number): string {
         <WordCard :word="store.word!" />
       </div>
 
+      <!-- 单词字母个数 -->
+      <div class="mt-8">
+        {{ store.word?.word.length }} letters
+        {{ store.word?.word.includes(' ') ? `(${store.word?.word.split(' ').length - 1} spaces included)` : '(no spaces included)' }}
+      </div>
+
       <!-- 剩余次数显示 -->
-      <div class="mt-8">({{ store.tries.length }} / {{ MAXIMUM_TRIES }} tries)</div>
+      <div class="mt-1">({{ store.tries.length }} / {{ MAXIMUM_TRIES }} tries)</div>
 
       <!-- 已经猜过的单词列表 -->
       <div class="my-4 flex flex-col items-center">
