@@ -1,39 +1,9 @@
-# GSN-Wordle
+# GSN Wordle
 
-This template should help get you started developing with Vue 3 in Vite.
+## 项目简介
 
-## Recommended IDE Setup
+A game similar to "Wordle", but with some interesting twists and features.
 
-[VSCode](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur).
+## 开发信息
 
-## Type Support for `.vue` Imports in TS
-
-TypeScript cannot handle type information for `.vue` imports by default, so we replace the `tsc` CLI with `vue-tsc` for type checking. In editors, we need [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) to make the TypeScript language service aware of `.vue` types.
-
-## Customize configuration
-
-See [Vite Configuration Reference](https://vitejs.dev/config/).
-
-## Project Setup
-
-```sh
-pnpm install
-```
-
-### Compile and Hot-Reload for Development
-
-```sh
-pnpm dev
-```
-
-### Type-Check, Compile and Minify for Production
-
-```sh
-pnpm build
-```
-
-### Lint with [ESLint](https://eslint.org/)
-
-```sh
-pnpm lint
-```
+[![wakatime](https://wakatime.com/badge/user/c4514f01-2455-4665-8c86-194659ba07a6/project/018e3f83-590f-49e7-b212-cdd2d775f634.svg)](https://wakatime.com/badge/user/c4514f01-2455-4665-8c86-194659ba07a6/project/018e3f83-590f-49e7-b212-cdd2d775f634)
