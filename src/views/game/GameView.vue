@@ -43,7 +43,7 @@ async function guessWord() {
 }
 
 function getLetterColorClass(letter: string, idx: number): string {
-  if (store.word!.word[idx].toLowerCase() === letter.toLowerCase()) return 'text-green-400'
+  if ((store.word!.word[idx] ?? '?').toLowerCase() === letter.toLowerCase()) return 'text-green-400'
   if (store.word!.word.toLowerCase().includes(letter.toLowerCase())) return 'text-yellow-400'
   return 'text-red-400'
 }
@@ -101,9 +101,10 @@ function getLetterColorClass(letter: string, idx: number): string {
         <var-input
           v-model="guessInput"
           :disabled="store.isFinished"
-          :maxlength="store.word?.word.length"
+          :maxlength="(store.word?.word.length ?? 0) + 3"
           :rules="[
-            (val) => val.length > (store.word?.word.length ?? 3) - 3 || `Length must be greater than ${(store.word?.word.length ?? 3) - 3}`,
+            (val) =>
+              val.length >= (store.word?.word.length ?? 0) - 3 || `Length must be greater than ${(store.word?.word.length ?? 0) - 4}`,
           ]"
           placeholder="Take a guess"
         >
