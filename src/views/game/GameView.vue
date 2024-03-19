@@ -3,11 +3,12 @@ import { getWordList, getWordOfTheDay } from '@/pkg/services/api'
 import { GameLogic, MAXIMUM_TRIES } from '@/pkg/services/game_logic'
 import { Snackbar } from '@varlet/ui'
 import { onBeforeMount, ref } from 'vue'
+import { useStore } from '@/pkg/stores/app'
+import axios from 'axios'
 
 import { Icon } from '@iconify/vue'
 import WordCard from '../word/components/WordCard.vue'
-import { useStore } from '@/pkg/stores/app'
-import axios from 'axios'
+import GuessedWordCard from './components/GuessedWordCard.vue'
 
 const store = useStore()
 
@@ -40,12 +41,6 @@ async function guessWord() {
   }
 
   guessInput.value = ''
-}
-
-function getLetterColorClass(letter: string, idx: number): string {
-  if ((store.word!.word[idx] ?? '?').toLowerCase() === letter.toLowerCase()) return 'text-green-400'
-  if (store.word!.word.toLowerCase().includes(letter.toLowerCase())) return 'text-yellow-400'
-  return 'text-red-400'
 }
 </script>
 
@@ -81,19 +76,18 @@ function getLetterColorClass(letter: string, idx: number): string {
       </div>
 
       <!-- 单词字母个数 -->
-      <div class="mt-8">
+      <div class="mt-8 font-bold underline">
         {{ store.word?.word.length }} characters in total
         {{ store.word?.word.includes(' ') ? `(${store.word?.word.split(' ').length - 1} spaces included)` : '(no spaces included)' }}
       </div>
 
-      <!-- 剩余次数显示 -->
-      <div class="mt-1">({{ store.tries.length }} / {{ MAXIMUM_TRIES }} tries)</div>
-
       <!-- 已经猜过的单词列表 -->
       <div class="my-4 flex flex-col items-center">
-        <var-paper elevation v-for="(guess, idx) in store.tries" :key="idx" class="mt-4 px-5 py-3">
-          <span v-for="(letter, idx) in guess" :key="idx" :class="`${getLetterColorClass(letter, idx)}`">{{ letter }}</span>
-        </var-paper>
+        <GuessedWordCard
+          v-for="(guess, key) in store.tries.concat(new Array<string>(MAXIMUM_TRIES - store.tries.length).fill(''))"
+          :key
+          :guess
+        />
       </div>
 
       <!-- 单词输入框 -->
@@ -124,7 +118,7 @@ function getLetterColorClass(letter: string, idx: number): string {
           <span v-for="(letter, idx) in store.word?.definition" :key="idx">
             {{
               !'abcdefghijklmnopqrstuvwxyz'.includes(letter.toLowerCase()) ||
-              (store.tries.join().includes(letter.toLowerCase()) && getLetterColorClass(letter, 0) !== 'text-red-400')
+              (store.tries.join().includes(letter.toLowerCase()) && !store.getLetterColorClass(letter, 0).includes('gray'))
                 ? letter
                 : '_'
             }}
