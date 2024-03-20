@@ -91,11 +91,12 @@ async function guessWord() {
       </div>
 
       <!-- 单词输入框 -->
-      <div class="flex flex-col justify-center">
+      <div class="mt-4 flex flex-col justify-center">
         <var-input
           v-model="guessInput"
           :disabled="store.isFinished"
           :maxlength="(store.word?.word.length ?? 0) + 3"
+          variant="outlined"
           :rules="[
             (val) =>
               val.length >= (store.word?.word.length ?? 0) - 3 || `Length must be greater than ${(store.word?.word.length ?? 0) - 4}`,
