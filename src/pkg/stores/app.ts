@@ -11,8 +11,8 @@ export const useStore = defineStore('app', () => {
   const isFinished = ref(false)
 
   function getLetterColorClass(letter: string, idx: number): string {
-    if ((word.value!.word[idx] ?? '?').toLowerCase() === letter.toLowerCase()) return 'bg-green-400'
-    if (word.value!.word.toLowerCase().includes(letter.toLowerCase())) return 'bg-yellow-400'
+    if ((word.value?.word[idx] ?? '?').toLowerCase() === letter.toLowerCase()) return 'bg-green-400'
+    if (word.value?.word.toLowerCase().includes(letter.toLowerCase())) return 'bg-yellow-400'
     return 'bg-gray-300'
   }
 
