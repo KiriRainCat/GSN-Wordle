@@ -73,10 +73,21 @@ async function guessWord() {
         <WordCard :word="store.word!" />
       </div>
 
-      <!-- 单词字母个数 -->
-      <div class="mt-8 font-bold underline">
-        {{ store.word?.word.length }} characters in total
-        {{ store.word?.word.includes(' ') ? `(${store.word?.word.split(' ').length - 1} spaces included)` : '(no spaces included)' }}
+      <!-- 单词提示 -->
+      <div class="mt-8 text-center">
+        <!-- 单词长度 -->
+        <div class="mb-1 font-bold underline">
+          {{ store.word?.word.length }} characters in total
+          {{ store.word?.word.includes(' ') ? `(${store.word?.word.split(' ').length - 1} spaces included)` : '(no spaces included)' }}
+        </div>
+
+        <!-- 单词所属类别 -->
+        <div>
+          <div v-if="!((store.tries.length ?? 0) >= MAXIMUM_TRIES / 2 - 1)">
+            Word category will be revealed in {{ MAXIMUM_TRIES / 2 - 1 - (store.tries.length ?? 0) }} tries
+          </div>
+          <div v-else>Category: {{ store.word?.subject }}</div>
+        </div>
       </div>
 
       <!-- 已经猜过的单词列表 -->
@@ -110,8 +121,8 @@ async function guessWord() {
 
       <!-- 单词释义 -->
       <div class="mt-6 max-w-96">
-        <var-paper elevation v-if="!((store.tries.length ?? 0) > MAXIMUM_TRIES / 2 - 1)" class="p-3 text-xs">
-          Definition will be revealed in {{ MAXIMUM_TRIES / 2 - 1 - (store.tries.length ?? 0) }} tries
+        <var-paper elevation v-if="!((store.tries.length ?? 0) >= MAXIMUM_TRIES / 2)" class="p-3 text-xs">
+          Definition will be revealed in {{ MAXIMUM_TRIES / 2 - (store.tries.length ?? 0) }} tries
         </var-paper>
         <var-paper elevation v-else class="p-3 text-lg tracking-widest">
           <span v-for="(letter, idx) in store.word?.definition" :key="idx">
