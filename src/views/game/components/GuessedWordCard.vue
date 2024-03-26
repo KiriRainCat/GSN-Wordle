@@ -17,7 +17,7 @@ defineProps({
       v-for="(_, idx) in store.word?.word + '???'"
       :key="idx"
       :class="
-        `${store.getLetterColorClass(guess[idx] ?? ' ', idx)}` +
+        `${store.getLetterColorClass(guess[idx] ?? '!', idx)}` +
         (guess[idx] ? '' : ' bg-gray-50 !px-[1.3rem] !py-6') +
         ((store.word?.word + '???')[idx] === '?' ? ' opacity-25' : '')
       "
