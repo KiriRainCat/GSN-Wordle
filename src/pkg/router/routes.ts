@@ -14,8 +14,10 @@ export const routes: Array<RouteRecordRaw> = [
   },
   {
     path: '/game',
-    name: 'game',
-    component: () => import('../../views/game/GameView.vue'),
+    children: [
+      { path: 'daily', name: 'daily', component: () => import('../../views/game/DailyGameView.vue') },
+      { path: 'random', name: 'random', component: () => import('../../views/game/RandomGameView.vue') },
+    ],
   },
   {
     path: '/word-bank',

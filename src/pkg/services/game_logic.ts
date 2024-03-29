@@ -6,10 +6,13 @@ export const MAXIMUM_TRIES = 6
 export class GameLogic {
   private store = useStore()
 
-  constructor(word: Word) {
+  private mode: 'daily' | 'random' | 'quardle' | 'multiplayer'
+
+  constructor(word: Word, mode: 'daily' | 'random' | 'quardle' | 'multiplayer') {
+    this.mode = mode
     this.store.word = word
 
-    const storedData = localStorage.getItem('storedTries')?.split('|')
+    const storedData = localStorage.getItem(`${mode}-storedTries`)?.split('|')
     if (
       storedData &&
       new Date(Number.parseInt(storedData[0])).getDate() === new Date(Date.now()).getDate() &&
@@ -29,7 +32,10 @@ export class GameLogic {
     }
 
     this.store.tries.push(word.toLowerCase())
-    localStorage.setItem('storedTries', `${Date.now()}|${JSON.stringify(this.store.tries)}|${this.store.word?.word.toLowerCase()}`)
+    localStorage.setItem(
+      `${this.mode}-storedTries`,
+      `${Date.now()}|${JSON.stringify(this.store.tries)}|${this.store.word?.word.toLowerCase()}`
+    )
 
     if (word.toLowerCase() === this.store.word!.word.toLowerCase()) {
       this.store.isFinished = true
