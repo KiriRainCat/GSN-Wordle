@@ -80,7 +80,7 @@ async function submitForm() {
     <!-- 数据表单 -->
     <var-form ref="formRef" class="mt-2">
       <var-input v-model="form.word" placeholder="Word" :rules="[(val) => val.length > 2 || 'Length must be greater than 2']" />
-      <var-input v-model="form.subject" placeholder="Subject" :rules="[(val) => val.length > 2 || 'Length must be greater than 2']" />
+      <var-input v-model="form.subject" placeholder="Category" :rules="[(val) => val.length > 2 || 'Length must be greater than 2']" />
       <var-input
         textarea
         v-model="form.definition"
