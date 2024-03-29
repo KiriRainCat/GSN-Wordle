@@ -91,14 +91,14 @@ function logout() {
       <var-tabs-items v-model:active="activeTab" :can-swipe="false">
         <!-- 待审核单词 -->
         <var-tab-item>
-          <div class="grid max-h-[78vh] grid-cols-[repeat(auto-fit,minmax(16rem,1fr))] gap-x-3 gap-y-5 !overflow-auto py-1">
+          <div class="grid max-h-[78vh] grid-cols-[repeat(auto-fit,minmax(16rem,1fr))] gap-x-3 gap-y-5 !overflow-auto px-1 py-1">
             <WordCard v-for="word in store.words.filter((w) => !w.active)" :key="word.id" :word="word" />
           </div>
         </var-tab-item>
 
         <!-- 待批注提交 -->
         <var-tab-item>
-          <div class="grid max-h-[78vh] grid-cols-[repeat(auto-fit,minmax(32rem,1fr))] gap-x-3 gap-y-5 !overflow-auto py-1">
+          <div class="grid max-h-[78vh] grid-cols-[repeat(auto-fit,minmax(32rem,1fr))] gap-x-3 gap-y-5 !overflow-auto px-1 py-1">
             <CommitCard
               v-for="commit in store.commits"
               :key="commit.id"
@@ -110,7 +110,7 @@ function logout() {
 
         <!-- 已批准的单词 -->
         <var-tab-item>
-          <div class="grid max-h-[78vh] grid-cols-[repeat(auto-fit,minmax(16rem,1fr))] gap-x-3 gap-y-5 !overflow-auto py-1">
+          <div class="grid max-h-[78vh] grid-cols-[repeat(auto-fit,minmax(16rem,1fr))] gap-x-3 gap-y-5 !overflow-auto px-1 py-1">
             <WordCard v-for="word in store.words.filter((w) => w.active)" :key="word.id" :word="word" />
           </div>
         </var-tab-item>

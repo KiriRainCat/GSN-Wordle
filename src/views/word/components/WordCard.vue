@@ -46,7 +46,7 @@ async function handleDeleteWord() {
   </var-dialog>
 
   <!-- 单词卡 -->
-  <var-paper :elevation="2" class="max-w-[16rem] translate-x-0 break-inside-avoid p-4">
+  <var-paper :elevation="2" class="translate-x-0 break-inside-avoid p-4">
     <!-- 单词基本信息 -->
     <div class="text-xl font-bold">{{ word.word }}</div>
     <div class="-mt-1.5 text-sm text-gray-400">{{ word.subject }}</div>

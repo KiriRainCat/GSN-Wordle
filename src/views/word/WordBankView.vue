@@ -52,7 +52,7 @@ const showAddWordDialog = ref(false)
 
     <!-- 单词卡片列表 -->
     <var-loading type="wave" :loading="isLoading" class="w-full">
-      <div class="grid max-h-[83vh] grid-cols-[repeat(auto-fit,minmax(16rem,1fr))] gap-x-3 gap-y-5 !overflow-auto py-1">
+      <div class="grid max-h-[83vh] grid-cols-[repeat(auto-fit,minmax(16rem,1fr))] gap-x-3 gap-y-5 !overflow-auto px-1 py-1">
         <WordCard v-for="word in store.words.filter((w) => w.active)" :key="word.id" :word="word" />
       </div>
     </var-loading>
