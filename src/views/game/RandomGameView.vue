@@ -19,6 +19,7 @@ let logic: GameLogic
 const guessInput = ref('')
 
 onBeforeMount(async () => {
+  store.isFinished = false
   store.word = await getRandomWord()
   store.words = await getWordList()
   logic = new GameLogic(store.word, 'random')
