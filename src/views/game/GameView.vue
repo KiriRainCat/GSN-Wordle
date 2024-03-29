@@ -57,7 +57,7 @@ async function guessWord() {
         </var-tooltip>
 
         <!-- 页面标题 -->
-        <div class="mx-2 mb-2 mt-0.5 text-2xl font-bold">Georgiadle Demo</div>
+        <div class="mx-2 mb-2 mt-0.5 text-2xl font-bold">Georgiadle</div>
 
         <!-- 排行榜按钮 -->
         <var-tooltip trigger="hover" content="Leaderboard">
