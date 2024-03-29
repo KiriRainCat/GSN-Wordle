@@ -14,27 +14,35 @@ const rainbowTextClasses = [
 </script>
 
 <template>
-  <div class="mt-[15%] flex flex-col items-center">
+  <div class="mt-[8%] flex flex-col items-center">
     <div class="mb-8 text-3xl">Welcome to...</div>
 
     <!-- Rainbow colored 'Georgiadle' -->
-    <div class="mb-12 flex select-none font-[Georgia] text-5xl font-bold" @dblclick="() => $router.push({ name: 'word-bank' })">
+    <div class="mb-12 flex select-none font-[Georgia] text-5xl font-bold">
       <div v-for="(letter, idx) in 'Georgiadle!'" :key="idx" :class="rainbowTextClasses[idx % rainbowTextClasses.length]">
         {{ letter }}
       </div>
     </div>
+
+    <!-- Logo -->
+    <img
+      src="@/assets/logo.png"
+      alt="logo"
+      @click="() => $router.push({ name: 'word-bank' })"
+      class="mb-12 h-48 cursor-pointer select-none"
+    />
 
     <!-- Description -->
     <div class="mb-2 text-lg">A game similar to "Wordle", but with some interesting twists and features.</div>
 
     <!-- Link for about page -->
     <var-button text @click="() => $router.push({ name: 'about' })" class="about-text mb-6">
-      Read more about Geordle & its contributors
+      Read more about Georgiadle & its contributors
     </var-button>
 
     <!-- Button to start game -->
     <var-tooltip trigger="hover" content="Have fun !!!">
-      <var-button @click="() => $router.push({ name: 'game' })" type="success" class="px-10 py-5">
+      <var-button @click="() => $router.push({ name: 'daily' })" type="success" class="px-10 py-5">
         <Icon icon="majesticons:rocket-3-start-line" class="h-6 w-6" />
       </var-button>
     </var-tooltip>
