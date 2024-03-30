@@ -10,6 +10,7 @@ import { Icon } from '@iconify/vue'
 import WordCard from '../word/components/WordCard.vue'
 import GuessedWordCard from './components/GuessedWordCard.vue'
 import PageHeader from './components/PageHeader.vue'
+import DefinitionHint from './components/DefinitionHint.vue'
 
 const store = useStore()
 
@@ -112,21 +113,7 @@ const reload = () => location.reload()
       </div>
 
       <!-- 单词释义 -->
-      <div class="mt-6 max-w-96">
-        <var-paper elevation v-if="!((store.tries.length ?? 0) >= MAXIMUM_TRIES / 2)" class="p-3 text-xs">
-          Definition will be revealed in {{ MAXIMUM_TRIES / 2 - (store.tries.length ?? 0) }} tries
-        </var-paper>
-        <var-paper elevation v-else class="p-3 text-lg tracking-widest">
-          <span v-for="(letter, idx) in store.word?.definition" :key="idx">
-            {{
-              !'abcdefghijklmnopqrstuvwxyz'.includes(letter.toLowerCase()) ||
-              (store.tries.join().includes(letter.toLowerCase()) && !store.getLetterColorClass(letter, 0).includes('gray'))
-                ? letter
-                : '_'
-            }}
-          </span>
-        </var-paper>
-      </div>
+      <DefinitionHint class="mt-6" />
     </div>
   </var-loading>
 </template>
