@@ -5,6 +5,8 @@ import { useStore } from '@/pkg/stores/app'
 const store = useStore()
 
 function computeLetterToBeDisplayed(letter: string): string {
+  if (letter === ' ') return ' '
+
   if (store.tries.length >= MAXIMUM_TRIES - 1) return letter
 
   if (store.tries.join().includes(letter)) {
