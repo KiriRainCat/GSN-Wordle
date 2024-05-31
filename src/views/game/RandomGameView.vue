@@ -22,7 +22,7 @@ const guessInput = ref('')
 onBeforeMount(async () => {
   store.isFinished = false
   store.word = await getRandomWord()
-  store.words = await getWordList()
+  getWordList().then((words) => store.setWords(words))
   logic = new GameLogic(store.word, 'random')
   initializing.value = false
 })

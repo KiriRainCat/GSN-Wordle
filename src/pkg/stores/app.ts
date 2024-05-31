@@ -4,6 +4,11 @@ import type { Word, Commit } from '../services/api_types'
 
 export const useStore = defineStore('app', () => {
   const words = ref(Array<Word>())
+  function setWords(newWords: Word[]) {
+    words.value = newWords
+    localStorage.setItem('words', JSON.stringify(newWords))
+  }
+
   const commits = ref(Array<Commit>())
 
   const word = ref<Word | undefined>()
@@ -18,6 +23,7 @@ export const useStore = defineStore('app', () => {
 
   return {
     words,
+    setWords,
     commits,
     word,
     tries,

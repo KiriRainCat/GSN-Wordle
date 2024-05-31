@@ -14,7 +14,7 @@ onBeforeMount(fetchWordList)
 
 async function fetchWordList() {
   isLoading.value = true
-  store.words = await getWordList()
+  getWordList().then((words) => store.setWords(words))
   isLoading.value = false
 }
 

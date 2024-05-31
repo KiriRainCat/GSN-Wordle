@@ -22,7 +22,8 @@ const guessInput = ref('')
 onBeforeMount(async () => {
   store.isFinished = false
   store.word = await getWordOfTheDay()
-  store.words = await getWordList()
+  getWordList().then((words) => store.setWords(words))
+
   logic = new GameLogic(store.word, 'daily')
   initializing.value = false
 })
@@ -30,10 +31,10 @@ onBeforeMount(async () => {
 async function guessWord() {
   if (guessInput.value.length < store.word!.word.length - 3) return
 
-  try {
-    await axios.get(`https://api.dictionaryapi.dev/api/v2/entries/en/${guessInput.value}`)
-  } catch (_) {
-    if (!store.words.map((w) => w.word.toLowerCase()).includes(guessInput.value.toLowerCase())) {
+  if (!store.words.map((w) => w.word.toLowerCase()).includes(guessInput.value.toLowerCase())) {
+    try {
+      await axios.get(`https://api.dictionaryapi.dev/api/v2/entries/en/${guessInput.value}`)
+    } catch (_) {
       Snackbar({ type: 'error', content: 'No such word! Please try again' })
       return
     }

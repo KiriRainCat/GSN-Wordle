@@ -26,7 +26,7 @@ async function authAndFetchData(password?: string) {
   if (await authAdmin(password ?? localStorage.getItem('adminPassword') ?? '')) {
     showAuthDialog.value = false
     isLoading.value = true
-    store.words = await getWordList()
+    getWordList().then((words) => store.setWords(words))
     store.commits = await getCommits()
     isLoading.value = false
   }
