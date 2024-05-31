@@ -49,19 +49,21 @@ async function guessWord() {
 </script>
 
 <template>
-  <var-loading type="wave" :loading="initializing" class="h-[92vh] overflow-auto py-6">
+  <var-loading type="wave" :loading="initializing" class="h-full overflow-auto py-6">
     <div class="flex flex-col items-center">
       <!-- 页面顶部栏 -->
       <PageHeader />
 
-      <!-- 今日单词 (在游戏结束时显示) -->
-      <div v-if="store.isFinished" class="mx-[36%] mt-6">
-        <div class="mb-2 text-center text-lg font-bold text-sky-950">Word of the Day:</div>
+      <!-- 答案单词 (在游戏结束时显示) -->
+      <div v-if="store.isFinished" class="mx-[36%] mt-3">
         <WordCard :word="store.word!" />
       </div>
 
+      <!-- 单词释义 -->
+      <DefinitionHint v-else class="mt-1" />
+
       <!-- 单词提示 -->
-      <div class="mt-8 text-center">
+      <div class="mt-5 text-center">
         <!-- 单词长度 -->
         <div class="mb-1 font-bold underline">{{ store.word?.word.length }} letters in total</div>
 
@@ -75,16 +77,16 @@ async function guessWord() {
       </div>
 
       <!-- 已经猜过的单词列表 -->
-      <div class="my-4 flex flex-col items-center">
+      <div class="my-1 flex flex-col items-center">
         <GuessedWordCard
-          v-for="(guess, key) in store.tries.concat(new Array<string>(MAXIMUM_TRIES - store.tries.length).fill(''))"
-          :key
+          v-for="(guess, i) in store.tries.concat(new Array<string>(MAXIMUM_TRIES - store.tries.length).fill(''))"
+          :key="i"
           :guess
         />
       </div>
 
       <!-- 单词输入框 -->
-      <div class="mt-4 flex w-64 flex-col justify-center">
+      <div class="mt-6 flex w-64 flex-col justify-center">
         <var-input
           v-model="guessInput"
           :disabled="store.isFinished"
@@ -101,14 +103,8 @@ async function guessWord() {
             <Icon icon="ph:seal-question-duotone" />
           </template>
         </var-input>
-
-        <var-button type="success" :disabled="store.isFinished" @click="guessWord" class="mt-4 py-6">Guess!</var-button>
       </div>
-
-      <!-- 单词释义 -->
-      <DefinitionHint class="mt-6" />
     </div>
   </var-loading>
 </template>
-
 <style scoped lang="scss"></style>
