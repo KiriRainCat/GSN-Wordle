@@ -103,6 +103,7 @@ const reload = () => location.reload()
               val.length >= (store.word?.word.length ?? 0) - 3 || `Length must be greater than ${(store.word?.word.length ?? 0) - 4}`,
           ]"
           placeholder="Take a guess"
+          @keyup.enter="guessWord"
         >
           <template #append-icon>
             <Icon icon="ph:seal-question-duotone" />
