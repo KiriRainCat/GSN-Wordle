@@ -1,13 +1,11 @@
 <script setup lang="ts">
-import { Snackbar } from '@varlet/ui'
-
 import { Icon } from '@iconify/vue'
 </script>
 
 <template>
   <div class="flex justify-center border-0 border-b-[1.6px] border-solid border-b-slate-300">
     <!-- 返回按钮 -->
-    <var-tooltip trigger="hover" content="Go home">
+    <var-tooltip trigger="hover" content="Go Home">
       <var-button text round @click="() => $router.push('/')">
         <Icon icon="mdi:home" class="h-6 w-6 text-cyan-400" />
       </var-button>
@@ -32,10 +30,9 @@ import { Icon } from '@iconify/vue'
       </template>
     </var-menu>
 
-    <!-- 排行榜按钮 -->
-    <var-tooltip trigger="hover" content="Leaderboard">
-      <var-button text round @click="() => Snackbar('Coming soon...')" class="-ml-0.5">
-        <Icon icon="ic:round-leaderboard" class="h-6 w-6 text-indigo-400" />
+    <var-tooltip trigger="hover" content="Go Home">
+      <var-button text round @click="() => $router.push('/')">
+        <Icon icon="mdi:home" class="h-6 w-6 text-cyan-400" />
       </var-button>
     </var-tooltip>
   </div>
