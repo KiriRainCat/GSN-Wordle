@@ -20,12 +20,14 @@ import { Icon } from '@iconify/vue'
       </var-button>
 
       <template #menu>
-        <div class="flex justify-between rounded-md bg-gray-100 p-3 shadow-lg">
+        <var-paper elevation="1" radius="6" class="mt-3 flex justify-between p-3">
           <var-button text @click="() => $router.push({ name: 'daily' })" class="font-bold text-orange-400">Daily Mode</var-button>
           <var-button text @click="() => $router.push({ name: 'random' })" class="font-bold text-green-400">Random Mode</var-button>
-          <var-button text @click="() => Snackbar('Coming soon...')" class="font-bold text-cyan-400">Quardle Mode</var-button>
-          <var-button text @click="() => Snackbar('Coming soon...')" class="font-bold text-purple-400">Multiplayer Mode</var-button>
-        </div>
+          <var-button text @click="() => $router.push({ name: 'quardle' })" class="font-bold text-cyan-400">Quardle Mode</var-button>
+          <var-button text @click="() => $router.push({ name: 'multiplayer' })" class="font-bold text-purple-400">
+            Multiplayer Mode
+          </var-button>
+        </var-paper>
         <div class="h-2 bg-transparent" />
       </template>
     </var-menu>

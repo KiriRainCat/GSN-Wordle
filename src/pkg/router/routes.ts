@@ -17,6 +17,8 @@ export const routes: Array<RouteRecordRaw> = [
     children: [
       { path: 'daily', name: 'daily', component: () => import('../../views/game/DailyGameView.vue') },
       { path: 'random', name: 'random', component: () => import('../../views/game/RandomGameView.vue') },
+      { path: 'quardle', name: 'quardle', component: () => import('../../views/game/QuardleGameView.vue') },
+      { path: 'multiplayer', name: 'multiplayer', component: () => import('../../views/game/MultiplayerGameView.vue') },
     ],
   },
   {

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { getWordList, getWordOfTheDay } from '@/pkg/services/api'
+import { getRandomWord, getWordList } from '@/pkg/services/api'
 import { GameLogic, MAXIMUM_TRIES } from '@/pkg/services/game_logic'
 import { Snackbar } from '@varlet/ui'
 import { onBeforeMount, ref } from 'vue'
@@ -21,10 +21,9 @@ const guessInput = ref('')
 
 onBeforeMount(async () => {
   store.isFinished = false
-  store.word = await getWordOfTheDay()
+  store.word = await getRandomWord()
   getWordList().then((words) => store.setWords(words))
-
-  logic = new GameLogic(store.word, 'daily')
+  logic = new GameLogic(store.word, 'random')
   initializing.value = false
 })
 
@@ -46,6 +45,8 @@ async function guessWord() {
 
   guessInput.value = ''
 }
+
+const reload = () => location.reload()
 </script>
 
 <template>
@@ -54,13 +55,20 @@ async function guessWord() {
       <!-- 页面顶部栏 -->
       <PageHeader />
 
+      <!-- 刷新按钮 -->
+      <var-tooltip content="Get another word">
+        <var-button text round @click="reload" class="mt-1 text-red-400">
+          <Icon icon="mdi:refresh" class="h-5 w-5" />
+        </var-button>
+      </var-tooltip>
+
       <!-- 答案单词 (在游戏结束时显示) -->
-      <div v-if="store.isFinished" class="mx-[36%] mt-3">
+      <div v-if="store.isFinished" class="mx-[36%] mt-1">
         <WordCard :word="store.word!" />
       </div>
 
       <!-- 单词释义 -->
-      <DefinitionHint v-else class="mt-3" />
+      <DefinitionHint v-else class="mt-1" />
 
       <!-- 单词提示 -->
       <div class="mt-5 text-center">
@@ -107,4 +115,5 @@ async function guessWord() {
     </div>
   </var-loading>
 </template>
+
 <style scoped lang="scss"></style>

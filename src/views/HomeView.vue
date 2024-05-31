@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { Icon } from '@iconify/vue'
+import { ref } from 'vue'
 
 const rainbowTextClasses = [
   'text-red-400',
@@ -11,10 +12,12 @@ const rainbowTextClasses = [
   'text-purple-400',
   'text-pink-400',
 ]
+
+const selectedGameMode = ref('daily')
 </script>
 
 <template>
-  <div class="mt-[8%] flex flex-col items-center">
+  <div class="mt-[6%] flex flex-col items-center">
     <div class="mb-8 text-3xl">Welcome to...</div>
 
     <!-- Rainbow colored 'Georgiadle' -->
@@ -42,10 +45,18 @@ const rainbowTextClasses = [
 
     <!-- Button to start game -->
     <var-tooltip trigger="hover" content="Have fun !!!">
-      <var-button @click="() => $router.push({ name: 'daily' })" type="success" class="px-10 py-5">
+      <var-button @click="() => $router.push({ name: selectedGameMode })" type="success" class="px-10 py-5">
         <Icon icon="majesticons:rocket-3-start-line" class="h-6 w-6" />
       </var-button>
     </var-tooltip>
+
+    <!-- 游戏模式选择 -->
+    <var-select v-model="selectedGameMode" placeholder="Game Mode" class="mt-3 w-32">
+      <var-option label="Daily" value="daily"></var-option>
+      <var-option label="Random" value="random"></var-option>
+      <var-option label="Quardle" value="quardle"></var-option>
+      <var-option label="Multiplayer" value="multiplayer"></var-option>
+    </var-select>
   </div>
 </template>
 
