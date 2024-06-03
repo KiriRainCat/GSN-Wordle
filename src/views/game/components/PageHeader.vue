@@ -30,6 +30,7 @@ import { Icon } from '@iconify/vue'
       </template>
     </var-menu>
 
+    <!-- 返回按钮 -->
     <var-tooltip trigger="hover" content="Go Home">
       <var-button text round @click="() => $router.push('/')">
         <Icon icon="mdi:home" class="h-6 w-6 text-cyan-400" />

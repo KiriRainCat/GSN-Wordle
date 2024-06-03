@@ -1,10 +1,7 @@
 <script setup lang="ts">
-import { getWordList, getWordOfTheDay } from '@/pkg/services/api'
 import { GameLogic, MAXIMUM_TRIES } from '@/pkg/services/game_logic'
-import { Snackbar } from '@varlet/ui'
 import { onBeforeMount, ref } from 'vue'
 import { useStore } from '@/pkg/stores/app'
-import axios from 'axios'
 
 import { Icon } from '@iconify/vue'
 import WordCard from '../word/components/WordCard.vue'
@@ -20,31 +17,15 @@ let logic: GameLogic
 const guessInput = ref('')
 
 onBeforeMount(async () => {
-  store.isFinished = false
-  store.word = await getWordOfTheDay()
-  getWordList().then((words) => store.setWords(words))
-
-  logic = new GameLogic(store.word, 'daily')
+  logic = new GameLogic('daily')
+  await logic.init()
   initializing.value = false
 })
 
 async function guessWord() {
-  if (guessInput.value.length < store.word!.word.length - 3) return
-
-  if (!store.words.map((w) => w.word.toLowerCase()).includes(guessInput.value.toLowerCase())) {
-    try {
-      await axios.get(`https://api.dictionaryapi.dev/api/v2/entries/en/${guessInput.value}`)
-    } catch (_) {
-      Snackbar({ type: 'error', content: 'No such word! Please try again' })
-      return
-    }
+  if ((await logic.guess(guessInput.value)) != null) {
+    guessInput.value = ''
   }
-
-  if (logic.guess(guessInput.value)) {
-    Snackbar({ type: 'success', content: 'Hooray! You got it!' })
-  }
-
-  guessInput.value = ''
 }
 </script>
 
