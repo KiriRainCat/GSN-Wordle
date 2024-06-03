@@ -49,7 +49,7 @@ async function getRandomWord(): Promise<Word> {
   // 先尝试使用本地词库
   const { words } = useStore()
   if (words.length > 0) {
-    return words[Math.floor(Math.random() * words.length)]
+    return words.filter((w) => w.active)[Math.floor(Math.random() * words.length)]
   }
 
   // 不行的话就去服务器获取
