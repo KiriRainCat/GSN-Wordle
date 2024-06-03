@@ -16,12 +16,15 @@ export class GameLogic {
   }
 
   public async guess(word: string): Promise<boolean | undefined> {
+    // 检查次数是否已用完
     if (this.store.tries.length >= MAXIMUM_TRIES) {
       return
     }
 
+    // 检查输入是否合法
     if (word.length < this.store.word!.word.length - 3) return
 
+    // 检查输入是否在词库中
     if (!this.store.words.map((w) => w.word.toLowerCase()).includes(word.toLowerCase())) {
       try {
         await axios.get(`https://api.dictionaryapi.dev/api/v2/entries/en/${word}`)
@@ -32,17 +35,20 @@ export class GameLogic {
     }
 
     this.store.tries.push(word.toLowerCase())
-    localStorage.setItem(
-      `${this.mode}-storedTries`,
-      `${Date.now()}|${JSON.stringify(this.store.tries)}|${this.store.word?.word.toLowerCase()}`
-    )
 
+    // 只在日常模式下存储尝试
+    if (this.mode === 'daily') {
+      localStorage.setItem('daily-storedTries', `${Date.now()}|${JSON.stringify(this.store.tries)}|${this.store.word?.word.toLowerCase()}`)
+    }
+
+    // 判断是否猜对
     if (word.toLowerCase() === this.store.word!.word.toLowerCase()) {
       this.store.isFinished = true
       Snackbar({ type: 'success', content: 'Hooray! You got it!' })
       return true
     }
 
+    // 判断游戏结束
     if (this.store.tries.length == MAXIMUM_TRIES) {
       this.store.isFinished = true
     }
