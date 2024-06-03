@@ -1,6 +1,7 @@
 import axios from 'axios'
 import { Snackbar } from '@varlet/ui'
 import type { Commit, Word } from './api_types'
+import { useStore } from '../stores/app'
 
 const api = axios.create({
   baseURL: import.meta.env.VITE_API_BASE_URL,
@@ -45,6 +46,13 @@ async function getWordById(id: number): Promise<Word> {
 }
 
 async function getRandomWord(): Promise<Word> {
+  // 先尝试使用本地词库
+  const { words } = useStore()
+  if (words.length > 0) {
+    return words[Math.floor(Math.random() * words.length)]
+  }
+
+  // 不行的话就去服务器获取
   return (await api.get('/word-bank/random-word')).data['data']
 }
 
