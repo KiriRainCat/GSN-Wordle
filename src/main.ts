@@ -15,4 +15,7 @@ Locale.use('en-US')
 // 全局样式
 import './assets/styles.scss'
 
+// Driver 库的样式
+import 'driver.js/dist/driver.css'
+
 createApp(App).use(router).use(createPinia()).use(Varlet).mount('#app')

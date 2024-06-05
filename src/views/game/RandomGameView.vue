@@ -8,6 +8,7 @@ import WordCard from '../word/components/WordCard.vue'
 import GuessedWordCard from './components/GuessedWordCard.vue'
 import PageHeader from './components/PageHeader.vue'
 import DefinitionHint from './components/DefinitionHint.vue'
+import RefreshButton from './components/RefreshButton.vue'
 
 const store = useStore()
 
@@ -27,8 +28,6 @@ async function guessWord() {
     guessInput.value = ''
   }
 }
-
-const reload = () => location.reload()
 </script>
 
 <template>
@@ -38,11 +37,7 @@ const reload = () => location.reload()
       <PageHeader />
 
       <!-- 刷新按钮 -->
-      <var-tooltip content="Get another word">
-        <var-button text round @click="reload" class="mt-1 text-red-400">
-          <Icon icon="mdi:refresh" class="h-5 w-5" />
-        </var-button>
-      </var-tooltip>
+      <RefreshButton />
 
       <!-- 答案单词 (在游戏结束时显示) -->
       <div v-if="store.isFinished" class="mx-[36%] mt-1">
@@ -55,10 +50,10 @@ const reload = () => location.reload()
       <!-- 单词提示 -->
       <div class="mt-5 text-center">
         <!-- 单词长度 -->
-        <div class="mb-1 font-bold underline">{{ store.word?.word.length }} letters in total</div>
+        <div id="word-length" class="mb-1 font-bold underline">{{ store.word?.word.length }} letters in total</div>
 
         <!-- 单词所属类别 -->
-        <div>
+        <div id="word-category">
           <div v-if="!((store.tries.length ?? 0) >= MAXIMUM_TRIES / 2 - 1)">
             Word category will be revealed in {{ MAXIMUM_TRIES / 2 - 1 - (store.tries.length ?? 0) }} tries
           </div>
@@ -72,11 +67,12 @@ const reload = () => location.reload()
           v-for="(guess, i) in store.tries.concat(new Array<string>(MAXIMUM_TRIES - store.tries.length).fill(''))"
           :key="i"
           :guess
+          :id="i == 0 && 'first-guess-box'"
         />
       </div>
 
       <!-- 单词输入框 -->
-      <div class="mt-6 flex w-64 flex-col justify-center">
+      <div id="input" class="mt-6 flex w-64 flex-col justify-center">
         <var-input
           v-model="guessInput"
           :disabled="store.isFinished"

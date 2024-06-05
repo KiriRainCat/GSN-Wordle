@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { Icon } from '@iconify/vue'
+import { Tutorial } from '@/pkg/services/tutorials'
 </script>
 
 <template>
@@ -30,10 +31,10 @@ import { Icon } from '@iconify/vue'
       </template>
     </var-menu>
 
-    <!-- 返回按钮 -->
-    <var-tooltip trigger="hover" content="Go Home">
-      <var-button text round @click="() => $router.push('/')">
-        <Icon icon="mdi:home" class="h-6 w-6 text-cyan-400" />
+    <!-- 教程按钮 -->
+    <var-tooltip trigger="hover" content="Show Tutorial">
+      <var-button text round @click="() => Tutorial.showTutorial(['random', 'quardle'].includes($route.name!.toString()) ? true : false)">
+        <Icon icon="mdi:help-box" class="h-6 w-6 text-pink-400" />
       </var-button>
     </var-tooltip>
   </div>

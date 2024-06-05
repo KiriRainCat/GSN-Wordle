@@ -30,7 +30,7 @@ const activeDefinitionIdx = ref(0)
 </script>
 
 <template>
-  <div class="break-words" :class="isQuardleMode ? 'max-w-[28rem]' : 'max-w-96'">
+  <div id="definition-hint" class="break-words" :class="isQuardleMode ? 'max-w-[28rem]' : 'max-w-96'">
     <var-paper elevation v-if="!(currentTryLength >= MAXIMUM_TRIES / 2)" class="p-3 text-xs">
       Definition will be revealed in
       {{ MAXIMUM_TRIES / 2 - currentTryLength }}

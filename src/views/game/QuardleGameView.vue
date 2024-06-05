@@ -8,6 +8,7 @@ import WordCard from '../word/components/WordCard.vue'
 import GuessedWordCard from './components/GuessedWordCard.vue'
 import PageHeader from './components/PageHeader.vue'
 import DefinitionHint from './components/DefinitionHint.vue'
+import RefreshButton from './components/RefreshButton.vue'
 
 const MAXIMUM_TRIES = TRIES + 2
 const store = useStore()
@@ -30,8 +31,6 @@ async function guessWord() {
 }
 
 const currentTryLength = computed(() => store.quardleTries!.concat([]).sort((a, b) => b.length - a.length)[0].length)
-
-const reload = () => location.reload()
 </script>
 
 <template>
@@ -41,11 +40,7 @@ const reload = () => location.reload()
       <PageHeader />
 
       <!-- 刷新按钮 -->
-      <var-tooltip content="Get another word">
-        <var-button text round @click="reload" class="mt-1 text-red-400">
-          <Icon icon="mdi:refresh" class="h-5 w-5" />
-        </var-button>
-      </var-tooltip>
+      <RefreshButton />
 
       <!-- 答案单词 (在游戏结束时显示) -->
       <div v-if="store.isQuardleFinished?.every((v) => v)" class="mx-[36%] mt-1 flex flex-col gap-3">
@@ -61,10 +56,10 @@ const reload = () => location.reload()
       <!-- 单词提示 -->
       <div class="mt-5 text-center">
         <!-- 单词长度 -->
-        <div class="mb-1 font-bold underline">{{ store.quardleWords?.[0].word.length }} letters in total</div>
+        <div id="word-length" class="mb-1 font-bold underline">{{ store.quardleWords?.[0].word.length }} letters in total</div>
 
         <!-- 单词所属类别 -->
-        <div>
+        <div id="word-category">
           <div v-if="!(currentTryLength >= MAXIMUM_TRIES / 2 - 1)">
             Word categories will be revealed in {{ MAXIMUM_TRIES / 2 - 1 - currentTryLength }} tries
           </div>
@@ -86,6 +81,7 @@ const reload = () => location.reload()
               :guess
               mini
               :quardle-idx="0"
+              :id="i == 0 && 'first-guess-box'"
             />
           </div>
           <GuessedWordCard
@@ -117,7 +113,7 @@ const reload = () => location.reload()
       </div>
 
       <!-- 单词输入框 -->
-      <div class="mt-6 flex w-64 flex-col justify-center">
+      <div id="input" class="mt-6 flex w-64 flex-col justify-center">
         <var-input
           v-model="guessInput"
           :disabled="store.isQuardleFinished?.every((v) => v)"

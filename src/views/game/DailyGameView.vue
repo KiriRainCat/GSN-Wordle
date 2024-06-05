@@ -46,10 +46,10 @@ async function guessWord() {
       <!-- 单词提示 -->
       <div class="mt-5 text-center">
         <!-- 单词长度 -->
-        <div class="mb-1 font-bold underline">{{ store.word?.word.length }} letters in total</div>
+        <div id="word-length" class="mb-1 font-bold underline">{{ store.word?.word.length }} letters in total</div>
 
         <!-- 单词所属类别 -->
-        <div>
+        <div id="word-category">
           <div v-if="!((store.tries.length ?? 0) >= MAXIMUM_TRIES / 2 - 1)">
             Word category will be revealed in {{ MAXIMUM_TRIES / 2 - 1 - (store.tries.length ?? 0) }} tries
           </div>
@@ -63,11 +63,12 @@ async function guessWord() {
           v-for="(guess, i) in store.tries.concat(new Array<string>(MAXIMUM_TRIES - store.tries.length).fill(''))"
           :key="i"
           :guess
+          :id="i == 0 && 'first-guess-box'"
         />
       </div>
 
       <!-- 单词输入框 -->
-      <div class="mt-6 flex w-64 flex-col justify-center">
+      <div id="input" class="mt-6 flex w-64 flex-col justify-center">
         <var-input
           v-model="guessInput"
           :disabled="store.isFinished"
