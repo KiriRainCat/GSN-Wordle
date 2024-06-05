@@ -15,7 +15,17 @@ export const useStore = defineStore('app', () => {
   const tries = ref<string[]>([])
   const isFinished = ref(false)
 
-  function getLetterColorClass(letter: string, idx: number): string {
+  const quardleWords = ref<Array<Word> | undefined>()
+  const quardleTries = ref<Array<string[]> | undefined>()
+  const isQuardleFinished = ref<Array<boolean> | undefined>()
+
+  function getLetterColorClass(letter: string, idx: number, quardleIdx?: number): string {
+    if (quardleIdx != undefined) {
+      if ((quardleWords.value?.[quardleIdx]?.word[idx] ?? '?').toLowerCase() === letter.toLowerCase()) return 'bg-green-400'
+      if (quardleWords.value?.[quardleIdx]?.word.toLowerCase().includes(letter.toLowerCase())) return 'bg-yellow-400'
+      return 'bg-gray-300'
+    }
+
     if ((word.value?.word[idx] ?? '?').toLowerCase() === letter.toLowerCase()) return 'bg-green-400'
     if (word.value?.word.toLowerCase().includes(letter.toLowerCase())) return 'bg-yellow-400'
     return 'bg-gray-300'
@@ -28,6 +38,9 @@ export const useStore = defineStore('app', () => {
     word,
     tries,
     isFinished,
+    quardleWords,
+    quardleTries,
+    isQuardleFinished,
     getLetterColorClass,
   }
 })
