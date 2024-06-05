@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { GameLogic, MAXIMUM_TRIES as TRIES } from '@/pkg/services/game_logic'
-import { onBeforeMount, ref } from 'vue'
+import { computed, onBeforeMount, ref } from 'vue'
 import { useStore } from '@/pkg/stores/app'
 
 import { Icon } from '@iconify/vue'
@@ -28,6 +28,8 @@ async function guessWord() {
     guessInput.value = ''
   }
 }
+
+const currentTryLength = computed(() => store.quardleTries!.concat([]).sort((a, b) => b.length - a.length)[0].length)
 
 const reload = () => location.reload()
 </script>
@@ -63,8 +65,8 @@ const reload = () => location.reload()
 
         <!-- 单词所属类别 -->
         <div>
-          <div v-if="!store.quardleTries![0].some((arr) => arr.length >= MAXIMUM_TRIES / 2 - 1)">
-            Word categories will be revealed in {{ MAXIMUM_TRIES / 2 - 1 - (store.quardleTries![0].length ?? 0) }} tries
+          <div v-if="!(currentTryLength >= MAXIMUM_TRIES / 2 - 1)">
+            Word categories will be revealed in {{ MAXIMUM_TRIES / 2 - 1 - currentTryLength }} tries
           </div>
           <div v-else>
             Categories:
