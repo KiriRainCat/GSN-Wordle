@@ -63,7 +63,7 @@ const reload = () => location.reload()
 
         <!-- 单词所属类别 -->
         <div>
-          <div v-if="!((store.quardleTries![0].length ?? 0) >= MAXIMUM_TRIES / 2 - 1)">
+          <div v-if="!store.quardleTries![0].some((arr) => arr.length >= MAXIMUM_TRIES / 2 - 1)">
             Word categories will be revealed in {{ MAXIMUM_TRIES / 2 - 1 - (store.quardleTries![0].length ?? 0) }} tries
           </div>
           <div v-else>
