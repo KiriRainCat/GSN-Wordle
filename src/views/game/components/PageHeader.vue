@@ -33,7 +33,17 @@ import { Tutorial } from '@/pkg/services/tutorials'
 
     <!-- 教程按钮 -->
     <var-tooltip trigger="hover" content="Show Tutorial">
-      <var-button text round @click="() => Tutorial.showTutorial(['random', 'quardle'].includes($route.name!.toString()) ? true : false)">
+      <var-button
+        text
+        round
+        @click="
+          () =>
+            Tutorial.showTutorial(
+              ['random', 'quardle'].includes($route.name!.toString()) ? true : false,
+              $route.name!.toString() === 'quardle'
+            )
+        "
+      >
         <Icon icon="mdi:help-box" class="h-6 w-6 text-pink-400" />
       </var-button>
     </var-tooltip>
