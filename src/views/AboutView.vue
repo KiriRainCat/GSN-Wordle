@@ -8,10 +8,10 @@
     <div>Sam Zhou (Developer)</div>
     <div>Yewon Seo (Designer)</div>
     <div>Ethan Hoo (Contributor)</div>
-    <div>All other members in our SLP group at GSN during 2024</div>
+    <div>All members in our SLP group at GSN during 2024</div>
     
 
-    <div class="my-1 text-lg">Develop Time:</div>
+    <div class="mt-4 mb-1 text-lg">Develop Time:</div>
 
     <div>
       <div class="mr-2">Website:</div>
