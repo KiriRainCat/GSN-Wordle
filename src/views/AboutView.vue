@@ -4,7 +4,14 @@
   <div class="flex flex-col items-center">
     <div class="my-6 text-xl font-bold">About 「Georgiadle」</div>
 
-    <div class="mb-1 text-lg">Develop Time:</div>
+    <div class="mb-0.5 text-lg">Contributors:</div>
+    <div>Sam Zhou (Developer)</div>
+    <div>Yewon Seo (Designer)</div>
+    <div>Ethan Hoo (Contributor)</div>
+    <div>All other members in our SLP group at GSN during 2024</div>
+    
+
+    <div class="my-1 text-lg">Develop Time:</div>
 
     <div>
       <div class="mr-2">Website:</div>
